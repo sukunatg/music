@@ -15,7 +15,7 @@ async def logger_id(client):
     try:
         grp = await client(
             functions.channels.CreateChannelRequest(
-                title="Waruserbot Logger", about=desc, megagroup=True
+                title="ProximaUB Logger", about=desc, megagroup=True
             )
         )
         grp_id = grp.chats[0].id
