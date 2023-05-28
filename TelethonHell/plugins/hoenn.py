@@ -29,6 +29,22 @@ async def _(event):
     if 'mega stone found!' in event.raw_text:
         await bot.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-    
+    if 'A wild Latias' in event.raw_text:
+
+        await bot.disconnect()
+
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
+    if 'A wild Latios' in event.raw_text:
+
+        await bot.disconnect()
+
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
+    if 'A wild Groudon' in event.raw_text:
+
+        await bot.disconnect()
+
+        os.execl(sys.executable, sys.executable, *sys.argv)
     
     
