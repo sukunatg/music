@@ -35,3 +35,8 @@ async def _(event):
     if 'A wild Volcanion' in event.raw_text:
         await bot.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
+    if 'An expert trainer has challenged you to a battle.' in event.raw_text:
+
+        await bot.disconnect()
+
+        os.execl(sys.executable, sys.executable, *sys.argv)
