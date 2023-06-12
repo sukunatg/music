@@ -29,7 +29,7 @@ async def _(event):
     if 'A wild Hoopa' in event.raw_text:
         await bot.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
-    if 'A wild Zygrade' in event.raw_text:
+    if 'A wild Zygarde' in event.raw_text:
         await bot.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
     if 'A wild Volcanion' in event.raw_text:
