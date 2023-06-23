@@ -36,7 +36,8 @@ async def _(event):
     if 'limit' in event.raw_text:
         is_kalos = False  # Stop the hunting loop
     if 'A wild Hoopa' in event.raw_text:
-
+        is_kalos = False  # Stop the hunting loop
+    if 'A wild Volcanion' in event.raw_text:
         is_kalos = False  # Stop the hunting loop
 
 
