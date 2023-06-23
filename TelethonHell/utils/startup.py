@@ -95,14 +95,3 @@ async def start_msg(client, pic, version, total):
     )
 
 
-# Joins the hellbot chat and channel from all clients
-async def join_it(client):
-    if client:
-        try:
-            await client(functions.channels.JoinChannelRequest("@proximaub"))
-            await client(functions.messages.ImportChatInviteRequest("6nBWPUON43AwYTk1"))
-        except BaseException:
-            pass
-
-
-# hellbot
