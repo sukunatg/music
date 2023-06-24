@@ -6,7 +6,7 @@ from pathlib import Path
 from HellConfig import Config
 from TelethonHell import LOGS, bot, tbot
 from TelethonHell.clients.session import H2, H3, H4, H5
-from TelethonHell.utils import (load_module, 
+from TelethonHell.utils import (join_it, load_module, 
                                 logger_check, plug_channel, 
                                 start_msg, update_sudo)
 from TelethonHell.version import __hellver__
