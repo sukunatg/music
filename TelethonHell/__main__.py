@@ -6,7 +6,7 @@ from pathlib import Path
 from HellConfig import Config
 from TelethonHell import LOGS, bot, tbot
 from TelethonHell.clients.session import H2, H3, H4, H5
-from TelethonHell.utils import (join_it, load_module, 
+from TelethonHell.utils import (load_module, 
                                 logger_check, plug_channel, 
                                 start_msg, update_sudo)
 from TelethonHell.version import __hellver__
@@ -47,11 +47,7 @@ async def hell_is_on(total):
     await update_sudo()
     await logger_check(bot)
     await start_msg(tbot, HELL_PIC, __hellver__, total)
-    await join_it(bot)
-    await join_it(H2)
-    await join_it(H3)
-    await join_it(H4)
-    await join_it(H5)
+    
 
 
 # Hellbot starter...
