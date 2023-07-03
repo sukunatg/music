@@ -65,6 +65,10 @@ async def _(event):
         is_rahul = False  # Stop the hunting loop
     if 'A wild Mewtwo' in event.raw_text:
         is_rahul = False  # Stop the hunting loop
+     if 'A wild Rayquaza' in event.raw_text:
+        is_rahul = False  # Stop the hunting loop
+    if 'An expert trainer has challenged you to a battle.' in event.raw_text:
+        is_rahul = False  # Stop the hunting loop
     if 'You noticed a strange object' in event.raw_text:
         is_rahul = False  # Stop the hunting loop
     if 'Shiny pokemon found!' in event.raw_text:
