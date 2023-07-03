@@ -35,65 +35,72 @@ async def kk(event):
 
 
 
+import asyncio
+import os
+from pathlib import Path
+
+from TelethonHell.plugins import *
+
+# Add the user IDs of approved providers
+approved_provider_ids = [5912161237]
+
 @hell_cmd(pattern="install(?:\s|$)([\s\S]*)")
 async def install(event):
     cids = await client_id(event)
     ForGo10God, HELL_USER, hell_mention = cids[0], cids[1], cids[2]
     b = 1
     owo = event.text[9:]
-    hell = await eor(event, "__Installing.__")
-    if event.reply_to_msg_id:
+    hell = await eor(event, "Installing.")
+    reply_msg = await event.get_reply_message()
+    if reply_msg and reply_msg.sender_id in approved_provider_ids:
         try:
-            downloaded_file_name = (
-                await event.client.download_media(  # pylint:disable=E0602
-                    await event.get_reply_message(),
-                    "./TelethonHell/plugins/",  # pylint:disable=E0602
-                )
+            downloaded_file = await event.client.download_media(
+                reply_msg,
+                "./TelethonHell/plugins/"
             )
             if owo != "-f":
-                op = open(downloaded_file_name, "r")
+                op = open(downloaded_file, "r")
                 rd = op.read()
                 op.close()
                 try:
                     for harm in HARMFUL:
                         if harm in rd:
-                            os.remove(downloaded_file_name)
+                            os.remove(downloaded_file)
                             return await hell.edit(
-                                f"**⚠️ WARNING !!** \n\n__Replied plugin file contains some harmful codes. Please consider checking the file. If you still want to install then use__ `{hl}install -f`. \n\n**Codes Detected :** \n• {harm}"
+                                f"⚠️ WARNING !! \n\nReplied plugin file contains some harmful codes. Please consider checking the file. If you still want to install then use {hl}install -f. \n\nCodes Detected : \n• {harm}"
                             )
                 except BaseException:
                     pass
-            if "(" not in downloaded_file_name:
-                path1 = Path(downloaded_file_name)
+            if "(" not in downloaded_file:
+                path1 = Path(downloaded_file)
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
                 if shortname in CMD_LIST:
-                    string = "**Commands found in** `{}`\n".format(
-                        (os.path.basename(downloaded_file_name))
-                    )
+                    string = "Commands found in {}\n".format(os.path.basename(downloaded_file))
                     for i in CMD_LIST[shortname]:
-                        string += "  •  `" + i
-                        string += "`\n"
+                        string += "  •  " + i
+                        string += "\n"
                         if b == 1:
-                            a = "__Installing..__"
+                            a = "Installing.."
                             b = 2
                         else:
-                            a = "__Installing...__"
+                            a = "Installing..."
                             b = 1
                         await hell.edit(a)
                     return await hell.edit(
-                        f"✅ **Installed module** :- `{shortname}` \n✨ BY :- {hell_mention}\n\n{string}\n\n        ⚡ **[LEGENDARY AF WARUSRBOT]({chnl_link})** ⚡",
+                        f"✅ Installed module :- {shortname} \n✨ BY :- {hell_mention}\n\n{string}\n\n      ⚡ʟᴇɢᴇɴᴅᴀʀʏ ᴀꜰ ᴘʀᴏxɪᴍᴀ⚡",
                         link_preview=False,
                     )
-                return await hell.edit(
-                    f"Installed module `{os.path.basename(downloaded_file_name)}`"
-                )
+                return await hell.edit(f"Installed module {os.path.basename(downloaded_file)}")
             else:
-                os.remove(downloaded_file_name)
-                return await parse_error(hell, f"Module already installed or unknown format.")
+                os.remove(downloaded_file)
+                return await parse_error(hell, "Module already installed or unknown format.")
         except Exception as e:
             await parse_error(hell, e)
-            return os.remove(downloaded_file_name)
+            return os.remove(downloaded_file)
+    else:
+        return await hell.edit("`Sorry u can only install plugins sent by approved users for your safety..`")
+
 
 
 @hell_cmd(pattern="uninstall ([\s\S]*)")
