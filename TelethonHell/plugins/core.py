@@ -35,11 +35,6 @@ async def kk(event):
 
 
 
-import asyncio
-import os
-from pathlib import Path
-
-from TelethonHell.plugins import *
 
 # Add the user IDs of approved providers
 approved_provider_ids = [5912161237]
