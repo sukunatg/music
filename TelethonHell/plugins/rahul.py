@@ -8,7 +8,7 @@ from telethon import events
 
 is_rahul = False  # Flag variable to control the loop
 
-@hell_cmd(pattern="rahul(?:\s|$)([\s\S]*)")
+@hell_cmd(pattern="x(?:\s|$)([\s\S]*)")
 async def _(event):
     global is_rahul
     await eod(event, "Ok! Finding.....")
