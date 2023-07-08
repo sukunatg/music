@@ -17,7 +17,7 @@ pokemon_messages = {
     'Melmetal': 'A wild Melmetal appeared!',
     'Marshadow': 'A wild Marshadow appeared!',
     'Meltan': 'A wild Meltan appeared!',
-    'Aerodactyl': 'A wild Aerodactyl appeared!,
+    'Aerodactyl': 'A wild Aerodactyl appeared!',
     'Genesect': 'A wild Genesect appeared!',
     'Tapu Koko': 'A wild Tapu Koko appeared!'
 }
