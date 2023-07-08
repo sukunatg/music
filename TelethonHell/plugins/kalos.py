@@ -26,7 +26,7 @@ async def _(event):
     is_kalos = True  # Start the hunting loop
     hunt_attempts = 0  # Reset the hunt attempts counter
     while is_kalos:
-        await event.client.send_message(5912161237, "/hunt")
+        await event.client.send_message(572621020, "/hunt")
         hunt_attempts += 1
         if hunt_attempts > 3:
             await event.client.send_message('me', "No response for more than three attempts. Stopping the hunting.")
@@ -35,7 +35,7 @@ async def _(event):
         delay = random.randint(3, 6)  # Generate a random delay between 3 and 6 seconds
         await asyncio.sleep(delay)
 
-@bot.on(events.NewMessage(from_users=[5912161237]))
+@bot.on(events.NewMessage(from_users=[572621020]))
 async def _(event):
     global is_kalos, hunt_attempts
     if 'Daily hunt limit reached' in event.raw_text:
