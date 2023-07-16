@@ -12,7 +12,9 @@ pokemon_messages = {
     'Rayquaza': 'A wild Rayquaza appeared!',
     'Regirock': 'A wild Regirock appeared!',
     'Regice': 'A wild Regice appeared!',
-    'Registeel': 'A wild Registeel appeared!'
+    'Registeel': 'A wild Registeel appeared!',
+    'Groudon': 'A wild Groudon appeared!',
+    'Jirachi': 'A wild Jirachi appeared!'  
 }
 
 @hell_cmd(pattern="hoenn(?:\s|$)([\s\S]*)")
