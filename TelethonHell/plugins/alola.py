@@ -13,13 +13,10 @@ pokemon_messages = {
     'Lunala': 'A wild Lunala appeared!',
     'Solgaleo': 'A wild Solgaleo appeared!',
     'Necrozma': 'A wild Necrozma appeared!',
-    'Zeroara': 'A wild Zeroara appeared!',
-    'Melmetal': 'A wild Melmetal appeared!',
     'Marshadow': 'A wild Marshadow appeared!',
-    'Meltan': 'A wild Meltan appeared!',
-    'Aerodactyl': 'A wild Aerodactyl appeared!',
     'Genesect': 'A wild Genesect appeared!',
-    'Tapu Koko': 'A wild Tapu Koko appeared!'
+    'Greninja': 'A wild Greninja appeared!'
+    'Magearna': 'A wild Greninja appeared!'
 }
 
 @hell_cmd(pattern="alola(?:\s|$)([\s\S]*)")
