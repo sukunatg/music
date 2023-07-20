@@ -15,7 +15,7 @@ pokemon_messages = {
     'Necrozma': 'A wild Necrozma appeared!',
     'Marshadow': 'A wild Marshadow appeared!',
     'Genesect': 'A wild Genesect appeared!',
-    'Greninja': 'A wild Greninja appeared!'
+    'Greninja': 'A wild Greninja appeared!',
     'Magearna': 'A wild Greninja appeared!'
 }
 
