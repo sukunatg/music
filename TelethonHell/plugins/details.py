@@ -6,7 +6,7 @@ async def detail(event):
     if event.sender_id == (await event.client.get_me()).id and not event.is_reply:
         # Get the values of the required environment variables
         heroku_app_name = os.getenv('HEROKU_APP_NAME', 'Not set')
-        guesser_var = os.getenv('GUESSER', 'False')
+        guesser_var = os.getenv('guesser', 'False')
         trail_var = os.getenv('TRAIL', 'Yes')
 
         # Prepare the details message
