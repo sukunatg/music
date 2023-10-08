@@ -21,110 +21,52 @@ HEROKU_API_KEY = Config.HEROKU_API_KEY
 @hell_cmd(pattern="(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)")
 async def variable(hell):
     lg_id = Config.LOGGER_ID
+    restricted_var = "PLUGIN_CHANNEL"  # The variable you want to restrict
+
     if Config.HEROKU_APP_NAME is not None:
         app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
         return await parse_error(hell, "`HEROKU_APP_NAME` is not configured.", False)
+
     exe = hell.pattern_match.group(1)
     heroku_var = app.config()
-    if exe == "get":
-        event = await eor(hell, "Getting Variable Info...")
-        cap = "CHECK LOGGER."
-        capn = "Saved in LOGGER_ID !!"
-        try:
-            xvar = hell.pattern_match.group(2).split()[0]
-            variable = xvar.upper()
-            if variable in db_config:
-                return await eod(
-                    event,
-                    f"This is a SQL based variable. Do `{hl}gvar {variable}` to get variable info.",
-                )
-            if variable in ("STRING_SESSION", "BOT_TOKEN", "HEROKU_API_KEY", "INSTAGRAM_SESSION"):
-                if Config.ABUSE == "OFF":
-                    await event.client.send_file(hell.chat_id, cjb, caption=cap)
-                    await event.delete()
-                    await event.client.send_message(
-                        lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`"
-                    )
-                    return
-                else:
-                    await event.edit(f"**{capn}**")
-                    await event.client.send_message(
-                        lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`"
-                    )
-                    return
-            if variable in heroku_var:
-                return await event.edit(
-                    f"**Heroku Var:** \n\n`{variable}` = `{heroku_var[variable]}`\n"
-                )
-            else:
-                return await parse_error(event, f"No variable named `{variable}`", False)
-        except IndexError:
-            configs = prettyjson(heroku_var.to_dict(), indent=2)
-            with open("configs.json", "w") as fp:
-                fp.write(configs)
-            with open("configs.json", "r") as fp:
-                result = fp.read()
-                if len(result) >= 4096:
-                    await hell.client.send_file(
-                        hell.chat_id,
-                        "configs.json",
-                        reply_to=hell.id,
-                        caption="`Output too large, sending it as a file`",
-                    )
-                    await event.delete()
-                else:
-                    await event.edit(
-                        "**Heroku Var :**\n\n"
-                        "================================"
-                        f"\n```{result}```\n"
-                        "================================"
-                    )
-            os.remove("configs.json")
-            return
-    elif exe == "set":
-        event = await eor(hell, "Setting Heroku Variable...")
+
+    if exe == "set":
         xvar = hell.pattern_match.group(2)
         if not xvar:
-            return await eod(event, f"`{hl}set var <Var Name> <Value>`")
+            return await eod(hell, f"`{hl}set var <Var Name> <Value>`")
         variable = xvar.upper()
+
+        # Check if the variable is the restricted one
+        if variable == restricted_var:
+            return await hell.edit(f"You can't set the variable `{restricted_var}`.")
+
         value = hell.pattern_match.group(3)
         if not value:
             variable = variable.split()[0]
             try:
                 value = hell.pattern_match.group(2).split()[1]
             except IndexError:
-                return await eod(event, f"`{hl}set var <Var Name> <Value>`")
+                return await eod(hell, f"`{hl}set var <Var Name> <Value>`")
+
         if variable in db_config:
             return await eod(
-                event,
+                hell,
                 f"This is a SQL based variable. Do `{hl}svar {variable} {value}` to set this.",
             )
+
+        # Check again if the variable is the restricted one
+        if variable == restricted_var:
+            return await hell.edit(f"You can't set the variable `{restricted_var}`.")
+
         if variable in heroku_var:
-            await event.edit(f"`{variable}` **successfully changed to**  ->  `{value}`")
+            heroku_var[variable] = value
+            await hell.edit(f"`{variable}` **successfully changed to**  ->  `{value}`")
         else:
-            await event.edit(
+            await hell.edit(
                 f"`{variable}` **successfully added with value**  ->  `{value}`"
             )
-        heroku_var[variable] = value
-    elif exe == "del":
-        event = await eor(hell, "Getting info to delete Variable")
-        try:
-            xvar = hell.pattern_match.group(2).split()[0]
-        except IndexError:
-            return await eod(event, "`Please specify ConfigVars you want to delete`")
-        variable = xvar.upper()
-        if variable in db_config:
-            return await eod(
-                event,
-                f"This is a SQL based variable. Do `{hl}dvar {variable}` to delete it.",
-            )
-        if variable in heroku_var:
-            await event.edit(f"**Successfully Deleted** \n`{variable}`")
-            del heroku_var[variable]
-        else:
-            return await parse_error(event, f"`{variable}` __does not exists__", False)
-
+            heroku_var[variable] = value
 
 @hell_cmd(pattern="usage$")
 async def dyno_usage(hell):
