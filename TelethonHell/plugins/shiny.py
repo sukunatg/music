@@ -39,6 +39,8 @@ async def _(event):
         is_shiny = False  # Stop the hunting loop
     elif 'strange' in event.raw_text:
         is_shiny = False  # Stop the hunting loop
+    elif 'Cannot hunt while battling' in event.raw_text:
+        is_shiny = False  # Stop the hunting loop
     elif 'Shiny pokemon found!' in event.raw_text:
         is_shiny = False  # Stop the hunting loop
     else:
