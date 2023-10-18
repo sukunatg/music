@@ -24,6 +24,14 @@ async def _(event):
         is_kalos = False  # Turn off the auto hunt
         await event.edit("Auto hunt turned off.")
         return
+    
+    # Get the current time in IST
+    current_time = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    # Print the message with the timestamp
+    print(f"Plugin is invoked on {formatted_time} IST")
+    
     await event.edit("Finding...")  # Edit the command invoked message
     is_kalos = True  # Start the hunting loop
     hunt_attempts = 0  # Reset the hunt attempts counter
@@ -33,8 +41,8 @@ async def _(event):
         if hunt_attempts > 3:
             is_kalos = False  # Stop the hunting loop
             break
-        delay = random.randint(3, 6)  # Generate a random delay between 3 and 6 seconds
-        await asyncio.sleep(delay)
+        delay_seconds = random.uniform(3.0, 6.0)  # Generate a random delay in seconds
+        await asyncio.sleep(delay_seconds)
 
 @bot.on(events.NewMessage(from_users=[572621020]))
 async def _(event):
@@ -44,6 +52,8 @@ async def _(event):
     elif 'strange' in event.raw_text:
         is_kalos = False  # Stop the hunting loop
     elif 'Shiny pokemon found!' in event.raw_text:
+        is_kalos = False  # Stop the hunting loop
+    elif 'Cannot hunt while battling' in event.raw_text:
         is_kalos = False  # Stop the hunting loop
     else:
         for pokemon, message in pokemon_messages.items():
