@@ -1,9 +1,8 @@
-
-
-
-from telethon import events
 import random
 import asyncio
+import time
+from datetime import datetime, timedelta, timezone
+from telethon import events
 
 is_shiny = False  # Flag variable to control the loop
 hunt_attempts = 0  # Number of consecutive hunt attempts
@@ -15,22 +14,30 @@ pokemon_messages = {
 
 @hell_cmd(pattern="shiny(?:\s|$)([\s\S]*)")
 async def _(event):
-    global is_shiny, hunt_attempts
-    if is_shiny:
-        is_shiny = False  # Turn off the auto hunt
+    global is_kanto, hunt_attempts
+    if is_kanto:
+        is_kanto = False  # Turn off the auto hunt
         await event.edit("Auto hunt turned off.")
         return
+    
+    # Get the current time in IST
+    current_time = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    # Print the message with the timestamp
+    print(f"Plugin is invoked on {formatted_time} IST")
+    
     await event.edit("Finding...")  # Edit the command invoked message
-    is_shiny = True  # Start the hunting loop
+    is_kanto = True  # Start the hunting loop
     hunt_attempts = 0  # Reset the hunt attempts counter
-    while is_shiny:
+    while is_kanto:
         await event.client.send_message(572621020, "/hunt")
         hunt_attempts += 1
         if hunt_attempts > 3:
-            is_shiny = False  # Stop the hunting loop
+            is_kanto = False  # Stop the hunting loop
             break
-        delay = random.randint(3, 6)  # Generate a random delay between 3 and 6 seconds
-        await asyncio.sleep(delay)
+        delay_seconds = random.uniform(3.0, 6.0)  # Generate a random delay in seconds
+        await asyncio.sleep(delay_seconds)
 
 @bot.on(events.NewMessage(from_users=[572621020]))
 async def _(event):

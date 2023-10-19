@@ -1,11 +1,8 @@
-
-
-
-
-
-from telethon import events
 import random
 import asyncio
+import time
+from datetime import datetime, timedelta, timezone
+from telethon import events
 
 is_kanto = False  # Flag variable to control the loop
 hunt_attempts = 0  # Number of consecutive hunt attempts
