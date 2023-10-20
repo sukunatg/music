@@ -14,9 +14,9 @@ pokemon_messages = {
 
 @hell_cmd(pattern="shiny(?:\s|$)([\s\S]*)")
 async def _(event):
-    global is_kanto, hunt_attempts
-    if is_kanto:
-        is_kanto = False  # Turn off the auto hunt
+    global is_shiny, hunt_attempts
+    if is_shiny:
+        is_shiny = False  # Turn off the auto hunt
         await event.edit("Auto hunt turned off.")
         return
     
@@ -28,13 +28,13 @@ async def _(event):
     print(f"Plugin is invoked on {formatted_time} IST")
     
     await event.edit("Finding...")  # Edit the command invoked message
-    is_kanto = True  # Start the hunting loop
+    is_shiny = True  # Start the hunting loop
     hunt_attempts = 0  # Reset the hunt attempts counter
-    while is_kanto:
+    while is_shiny:
         await event.client.send_message(572621020, "/hunt")
         hunt_attempts += 1
         if hunt_attempts > 3:
-            is_kanto = False  # Stop the hunting loop
+            is_shiny = False  # Stop the hunting loop
             break
         delay_seconds = random.uniform(3.0, 6.0)  # Generate a random delay in seconds
         await asyncio.sleep(delay_seconds)
